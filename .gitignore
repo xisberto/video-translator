@@ -1,0 +1,4 @@
+.chalice/deployments/
+.chalice/venv/
+*.mp4
+.env
