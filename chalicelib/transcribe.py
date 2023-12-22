@@ -1,12 +1,19 @@
+import os
+
 import boto3
 
 
-def start_transcription_job(bucket_name: str, filename: str):
+def start_transcription_job(orig_bucket: str, filename: str, dest_bucket: str):
     transc_client = boto3.client('transcribe')
     return transc_client.start_transcription_job(
-        TranscriptionJobName=f"{bucket_name}__{filename}",
+        TranscriptionJobName=f"{orig_bucket}__{filename}",
         MediaFormat="mp4",
+        IdentifyLanguage=True,
         Media={
-            'MediaFileUri': f"https://{bucket_name}.s3.{os.getenv('AWS_DEFAULT_REGION')}.amazonaws.com/{filename}"
-        }
+            'MediaFileUri': f"https://{orig_bucket}.s3.{os.getenv('AWS_DEFAULT_REGION')}.amazonaws.com/{filename}"
+        },
+        Subtitles={
+            'Formats': ['srt']
+        },
+        OutputBucketName=dest_bucket
     )

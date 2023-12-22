@@ -1,3 +1,5 @@
+import os
+
 import boto3
 
 
@@ -10,5 +12,10 @@ def start_video_label(bucket_name: str, filename: str):
                 'Name': filename
             }
         },
-        MinConfidence=80
+        MinConfidence=80,
+        NotificationChannel={
+            'SNSTopicArn': os.getenv("AWS_SNS_TOPIC"),
+            'RoleArn': os.getenv("AWS_SNS_ROLE")
+        },
+        JobTag=f"{bucket_name}_{filename}"
     )
