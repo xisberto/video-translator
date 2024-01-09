@@ -1,4 +1,6 @@
 .chalice/deployments/
+.chalice/deployed/
 .chalice/venv/
+**/__pycache__/
 *.mp4
 .env
