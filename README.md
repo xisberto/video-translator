@@ -29,4 +29,9 @@ Executar o script `recordresources.py` para armazenar os recursos criados no `co
 python recordresources.py --stack-name video-rek
 ```
 
+Após isso, informar ao Git que o `config.json` deve ser tratado como não modificado (para que os nomes dos recursos não
+sejam enviados ao repositório):
 
+```bash
+git update-index --assume-unchanged .chalice/config.json
+```
