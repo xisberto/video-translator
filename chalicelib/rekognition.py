@@ -14,8 +14,8 @@ def start_video_label(bucket_name: str, filename: str):
         },
         MinConfidence=80,
         NotificationChannel={
-            'SNSTopicArn': os.getenv("AWS_SNS_TOPIC"),
-            'RoleArn': os.getenv("AWS_SNS_ROLE")
+            'SNSTopicArn': os.getenv("VIDEO_TOPIC_ARN"),
+            'RoleArn': os.getenv("VIDEO_ROLE_ARN")
         },
         JobTag=f"{bucket_name}_{filename}"
     )
