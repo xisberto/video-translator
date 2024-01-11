@@ -16,6 +16,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment: chalice-video-rek
 
     steps:
     - uses: actions/checkout@v3
