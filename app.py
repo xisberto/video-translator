@@ -1,3 +1,4 @@
+import json
 import os
 
 from chalice import Chalice
@@ -28,4 +29,9 @@ def handle_transcription(event: S3Event):
 
 @app.on_sns_message(topic=sns_topic)
 def handle_video_label_detected(event: SNSEvent):
-    app.log.debug(f"New SNS message received: {event.subject}:{event.message}")
+    message = json.loads(event.message)
+    app.log.debug(event.message)
+    bucket = message['Video']['S3Bucket']
+    filename = message['Video']['S3ObjectName']
+    app.log.debug(f"New SNS message for {bucket}/{filename}")
+    rekognition.save_label_detection(message)
