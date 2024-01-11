@@ -37,8 +37,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Deploy with Chalice
       env:
-        AWS_DEFAULT_REGION: ${{AWS_DEFAULT_REGION}}
-        AWS_ACCESS_KEY_ID: ${{AWS_ACCESS_KEY_ID}}
-        AWS_SECRET_ACCESS_KEY: ${{AWS_SECRET_ACCESS_KEY}}
+        AWS_DEFAULT_REGION: ${{ AWS_DEFAULT_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ AWS_SECRET_ACCESS_KEY }}
       run: |
         chalice deploy
