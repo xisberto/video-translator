@@ -14,7 +14,12 @@
       "Action": [
         "rekognition:DetectLabels",
         "rekognition:StartLabelDetection",
-        "rekognition:GetLabelDetection"
+        "rekognition:GetLabelDetection",
+        "transcribe:StartTranscriptionJob",
+        "iam:PassRole",
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:GetObjectAttributes"
       ],
       "Resource": "*",
       "Effect": "Allow"
