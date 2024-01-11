@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  deploy:
 
     runs-on: ubuntu-latest
     environment: chalice-video-rek
@@ -36,5 +36,9 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Deploy with Chalice
+      env:
+        AWS_DEFAULT_REGION: ${{AWS_DEFAULT_REGION}}
+        AWS_ACCESS_KEY_ID: ${{AWS_ACCESS_KEY_ID}}
+        AWS_SECRET_ACCESS_KEY: ${{AWS_SECRET_ACCESS_KEY}}
       run: |
         chalice deploy
