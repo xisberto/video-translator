@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 
@@ -17,11 +18,12 @@ sns_topic = os.getenv('VIDEO_TOPIC_ARN')
 @app.on_s3_event(bucket=origin_bucket, events=['s3:ObjectCreated:*'], suffix='.mp4')
 def handle_new_video(event: S3Event):
     """Detecta novo arquivo mp4 no bucket de origem e inicia os trabalhos de Rekognition e Transcribe"""
-    rekognition.start_video_label(event.bucket, event.key)
-    transcribe.start_transcription_job(event.bucket, event.key, destination_bucket)
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%dT%H.%M.%S")
+    rekognition.start_video_label(timestamp, event.bucket, event.key)
+    transcribe.start_transcription_job(timestamp, event.bucket, event.key, destination_bucket)
 
 
-@app.on_s3_event(bucket=destination_bucket, events=['s3:ObjectCreated:*'])
+@app.on_s3_event(bucket=destination_bucket, events=['s3:ObjectCreated:*'], suffix='.srt')
 def handle_transcription(event: S3Event):
     """Detecta o fim do trabalho de Transcribe e inicia o trabalho de tradução"""
     app.log.debug(f"New transcription detected: {event.bucket}/{event.key}")
