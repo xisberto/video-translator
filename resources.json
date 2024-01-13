@@ -25,7 +25,8 @@
                             ],
                             "Principal": {
                                 "Service": [
-                                    "rekognition.amazonaws.com"
+                                    "rekognition.amazonaws.com",
+                                    "translate.amazonaws.com"
                                 ]
                             }
                         }
@@ -45,6 +46,27 @@
                                         {
                                             "Ref": "VideoTopic"
                                         }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "PolicyName": "S3GetPutObjects",
+                        "PolicyDocument": {
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": [
+                                        "s3:GetObject",
+                                        "s3:PutObject",
+                                        "s3:ListBucket"
+                                    ],
+                                    "Resource": [
+                                        {"Fn::Sub": "arn:aws:s3:::${MediaBucketOrigin}/*"},
+                                        {"Fn::Sub": "arn:aws:s3:::${MediaBucketOrigin}"},
+                                        {"Fn::Sub": "arn:aws:s3:::${MediaBucketDestination}/*"},
+                                        {"Fn::Sub": "arn:aws:s3:::${MediaBucketDestination}"}
                                     ]
                                 }
                             ]

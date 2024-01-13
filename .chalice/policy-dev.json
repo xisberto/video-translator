@@ -18,7 +18,6 @@
         "rekognition:GetLabelDetection",
         "transcribe:StartTranscriptionJob",
         "translate:StartTextTranslationJob",
-        "lambda:GetFunctionConfiguration",
         "iam:PassRole",
         "s3:GetObject",
         "s3:PutObject",
