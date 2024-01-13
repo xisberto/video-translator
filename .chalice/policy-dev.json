@@ -11,18 +11,20 @@
       "Resource": "arn:*:logs:*:*:*"
     },
     {
+      "Effect": "Allow",
       "Action": [
         "rekognition:DetectLabels",
         "rekognition:StartLabelDetection",
         "rekognition:GetLabelDetection",
         "transcribe:StartTranscriptionJob",
+        "translate:StartTextTranslationJob",
+        "lambda:GetFunctionConfiguration",
         "iam:PassRole",
         "s3:GetObject",
         "s3:PutObject",
         "s3:GetObjectAttributes"
       ],
-      "Resource": "*",
-      "Effect": "Allow"
+      "Resource": "*"
     }
   ]
 }

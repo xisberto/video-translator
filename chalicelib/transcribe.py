@@ -1,4 +1,5 @@
 import os
+from logging import Logger
 
 import boto3
 
@@ -26,20 +27,25 @@ def start_transcription_job(timestamp: str, orig_bucket: str, filename: str, des
     )
 
 
-def start_translate_job(dest_bucket: str, filename: str):
+def start_translate_job(dest_bucket: str, filename: str, app_log: Logger):
     """
     Recebe a referência a um arquivo srt e inicia um job de translate para seu conteúdo.
+    :param app_log:
     :param dest_bucket:
     :param filename:
     """
+    role_arn = os.getenv('VIDEO_ROLE_ARN')
     transl_client = boto3.client('translate')
     return transl_client.start_text_translation_job(
         JobName=f"{dest_bucket}__{filename}",
         InputDataConfig={
-            'S3Uri': f"https://{dest_bucket}.s3.{os.getenv('AWS_DEFAULT_REGION')}.amazonaws.com/{filename}",
+            'S3Uri': f"s3://{dest_bucket}/{filename}",
             'ContentType': "text/plain"
         },
         OutputDataConfig={
-            'S3Uri': f"https://{dest_bucket}.s3.{os.getenv('AWS_DEFAULT_REGION')}.amazonaws.com/"
-        }
+            'S3Uri': f"s3://{dest_bucket}/"
+        },
+        DataAccessRoleArn=role_arn,
+        SourceLanguageCode="pt",
+        TargetLanguageCodes=["en"]
     )

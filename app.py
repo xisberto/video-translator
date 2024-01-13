@@ -27,6 +27,7 @@ def handle_new_video(event: S3Event):
 def handle_transcription(event: S3Event):
     """Detecta o fim do trabalho de Transcribe e inicia o trabalho de tradução"""
     app.log.debug(f"New transcription detected: {event.bucket}/{event.key}")
+    transcribe.start_translate_job(event.bucket, event.key, app.log)
 
 
 @app.on_sns_message(topic=sns_topic)
