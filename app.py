@@ -59,6 +59,8 @@ def handle_transcription(event: S3Event):
     app.log.debug(f"New transcription detected: {event.key}")
     transl_client = boto3.client('translate')
     containing_folder = re.compile(r"(.*)/subtitles/.*").match(event.key).groups()[0]
+    if containing_folder is None:
+        return
     input_uri = f"s3://{event.bucket}/{containing_folder}/subtitles"
     output_uri = f"s3://{destination_bucket}/{containing_folder}/translations"
     app.log.debug(f"Input: {input_uri}")
